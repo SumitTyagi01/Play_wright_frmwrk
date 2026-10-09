@@ -5,11 +5,11 @@ const { getTestCredentials } = require('../utils/test-credentials.js');
 // view the orders which he has created, not the ones which are not created by user
 
 
-test('Network Intercept request call for security testing', async ({ page }) => {
+test('Network Intercept request call for security testing', async ({ page }, testInfo) => {
 
     // login and reach orders page
 
-    const { username, password } = getTestCredentials();
+    const { username, password } = getTestCredentials(testInfo.project.name);
     await page.goto("https://rahulshettyacademy.com/client");
     await page.locator('#userEmail').fill(username)
     await page.locator('#userPassword').fill(password)

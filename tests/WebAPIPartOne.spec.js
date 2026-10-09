@@ -6,10 +6,10 @@ const ordersPayload = { orders: [{ country: "India", productOrderedId: "6960eac0
 
 let response;
 
-test.beforeAll(async () => {
+test.beforeAll(async ({}, workerInfo) => {
 
     //Login API
-    const { username, password } = getTestCredentials();
+    const { username, password } = getTestCredentials(workerInfo.project.name);
     const loginPayload = { userEmail: username, userPassword: password };
     const apiContext = await request.newContext();
     const apiUtils = new APIUtils(apiContext, loginPayload);

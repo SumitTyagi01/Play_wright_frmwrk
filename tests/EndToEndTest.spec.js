@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 const { getTestCredentials } = require('../utils/test-credentials.js');
 
-test('End to end test', async ({ page }) => {
+test('End to end test', async ({ page }, testInfo) => {
 
-    const { username, password } = getTestCredentials();
+    const { username, password } = getTestCredentials(testInfo.project.name);
     await page.goto("https://rahulshettyacademy.com/client");
     await page.locator('#userEmail').fill(username)
     await page.locator('#userPassword').fill(password)

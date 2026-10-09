@@ -5,18 +5,19 @@ const { getTestCredentials } = require('../utils/test-credentials.js');
 
 let webContext;
 
-test.beforeAll(async ({ browser }) => {
+test.beforeAll(async ({ browser }, workerInfo) => {
 
     const context = await browser.newContext();
     const page = await context.newPage();
-    const { username, password } = getTestCredentials();
+    const { username, password } = getTestCredentials(workerInfo.project.name);
     await page.goto("https://rahulshettyacademy.com/client");
     await page.locator('#userEmail').fill(username)
     await page.locator('#userPassword').fill(password)
     await page.locator('input#login').click()
     await page.waitForLoadState('networkidle')
-    await context.storageState({ path: 'state.json' })
-    webContext = await browser.newContext({ storageState: 'state.json' })
+    const storageState = await context.storageState();
+    await context.close();
+    webContext = await browser.newContext({ storageState });
 
 })
 

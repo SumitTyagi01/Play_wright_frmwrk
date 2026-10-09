@@ -13,7 +13,6 @@ class APIUtils {
 
         const loginResponseJson = await loginResponse.json()
         const token = loginResponseJson.token;
-        console.log(token)
         return token;
     }
 

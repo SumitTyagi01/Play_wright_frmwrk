@@ -10,11 +10,11 @@ const dataset = JSON.parse(JSON.stringify(require('../utils/placeorderTestData.j
 
 test.describe.configure({ mode: 'parallel' });
 for (const data of dataset) {
-    test(`@Web End to end test for ${data.productName}`, async ({ page }) => {
+    test(`@Web End to end test for ${data.productName}`, async ({ page }, testInfo) => {
 
         const poManager = new POManager(page);
 
-        const { username, password } = getTestCredentials();
+        const { username, password } = getTestCredentials(testInfo.project.name);
         const loginPage = poManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin(username, password);

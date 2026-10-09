@@ -1,5 +1,6 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
+const { getTestAccountNames } = require('./utils/test-credentials.js');
 
 
 /**
@@ -18,12 +19,13 @@ export default defineConfig({
   ],
 
 
-  use: {
-    browserName: 'chromium',
-    headless: false,
-    screenshot: 'on',
-    trace: 'on',
-  },
-
-
+  projects: getTestAccountNames().map(name => ({
+    name,
+    use: {
+      browserName: 'chromium',
+      headless: Boolean(process.env.CI),
+      screenshot: 'on',
+      trace: 'on',
+    },
+  })),
 });

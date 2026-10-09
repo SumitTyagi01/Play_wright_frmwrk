@@ -7,9 +7,9 @@ const ordersPayload = { orders: [{ country: "India", productOrderedId: "6960eac0
 
 exports.customtest = base.test.extend(
     {
-        authenticatedPage: async ({ browser }, use) => {
+        authenticatedPage: async ({ browser }, use, workerInfo) => {
 
-            const { username, password } = getTestCredentials();
+            const { username, password } = getTestCredentials(workerInfo.project.name);
             const context = await browser.newContext();
             const page = await context.newPage();
             await page.goto("https://rahulshettyacademy.com/client");
@@ -24,9 +24,9 @@ exports.customtest = base.test.extend(
 
         },
 
-        createOrder: async ({ }, use) => {
+        createOrder: async ({ }, use, workerInfo) => {
             //Login API
-            const { username, password } = getTestCredentials();
+            const { username, password } = getTestCredentials(workerInfo.project.name);
             const apiContext = await request.newContext();
             const apiUtils = new APIUtils(apiContext, { userEmail: username, userPassword: password });
             const response = await apiUtils.createOrder(ordersPayload);
